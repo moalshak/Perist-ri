@@ -1,5 +1,11 @@
 # Peristéri (Perist-ri)
 Submit to Themis through command line and get Themis's feedback.
+1. [ Requirements ](#desc)
+2. [ Installation ](#install)
+3. [ Usage ](#usage)
+    1. [Through command line arguments](#cmd)
+    2. [As a command line browser](#browser)
+4. [Coming features](#coming)
 
 Successful submission attempt:
     ![][overview]
@@ -7,6 +13,7 @@ Successful submission attempt:
 Failed submission attempt:
     ![][failed]
 
+<a name="req"></a>
 ## Requirements
 1. Git
     > [windows](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/#:~:text=Installing%20on%20Windows)
@@ -18,6 +25,7 @@ Failed submission attempt:
 2. Python
     > installation guide [here](https://realpython.com/installing-python/)
 
+<a name="install"></a>
 ## Installation
 
     > git clone git@github.com:Stylo2k/Perist-ri.git
@@ -30,22 +38,23 @@ This data will get stored locally in :
 
     ~/.themis_submitter/data.yaml
 
+<a name="usage"></a>
 ## Usage
-
+<a name="cmd"></a>
 ### Through command line arguments
     > python Peristéri.py <file to submit> <submission url>
 This will simply submit your file to the url you specify. This is the cleanest way to submit. But since not all people will prefer this way. You can use the browser method.
-
+<a name="browser"></a>
 ### As a command line browser
     > python Peristéri.py
 This will let you browse Themis just like you would in your browser. BUT of course through the terminal.
 
 You can specify to what directory you want to go with numbers (indices). When you are at a submittable page, you will get asked if you want to submit or go back. When you submit a small window will open to get you to choose the file you want to submit.
-
+<a name="after"></a>
 ### After submission
 
 After submission your submitted file wil get judged and the test cases you passed/failed will get prompted in your terminal. If you pass all test cases the program will terminate. Otherwise, you are given the chance to resubmit.
-
+<a name="coming"></a>
 # Coming features
 1. See in, out & difference test files
 2. Get hints from failed test cases
