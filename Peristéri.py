@@ -59,10 +59,10 @@ def submit_chosen(s, url):
     if payload and r and soup is None:
         return
     r = send_judge_request(payload, r, s, soup)
-
     soup = await_results(r, s, soup)
     rows = soup.find_all('tr', {'class': True})
-    print_test_results(rows)
+    rows_ = soup.find_all('tr', {'class': False})
+    print_test_results(rows, rows_)
 
 
 def send_submit_request(r, request_url, s, soup):
@@ -112,7 +112,7 @@ def await_results(r, s, soup):
     return soup
 
 
-def print_test_results(rows):
+def print_test_results(rows, rows_):
     # check for each test case
     j = 0
     l = 0
@@ -122,9 +122,15 @@ def print_test_results(rows):
             l += 1
             if tr['class'][1] == 'passed':
                 j += 1
-                print(f'Test Case {i}: PASSED ✅')
+                print(f'Test Case {i + 1}: PASSED ✅\n')
             else:
-                print_warning(f'Test Case {i}: FAILED ❌')
+                print(f'Test Case {i + 1}:', end="")
+                print_warning(f' FAILED ❌.')
+                reason = tr.find("td", attrs={"class": "iconize"}).text
+                if reason == '':
+                    reason = 'Compile Error'
+                print(f'Reason: {reason}. '
+                      f'{rows_[i * 3].td.text.strip()}\n')
     global passed_all
     if j == l:
         passed_all = True
