@@ -33,7 +33,7 @@ This data will get stored locally in :
 ## Usage
 
 ### Through command line arguments
-    > python Peristéri.py \<file to submit> \<submission url>
+    > python Peristéri.py <file to submit> <submission url>
 This will simply submit your file to the url you specify. This is the cleanest way to submit. But since not all people will prefer this way. You can use the browser method.
 
 ### As a command line browser
