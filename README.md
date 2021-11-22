@@ -7,6 +7,9 @@ Successful submission attempt:
 Failed submission attempt:
     ![][failed]
 
+Browser Mode:
+    ![][browser]
+
 ## Table Of Contents:
 1. [ Requirements ](#desc)
 2. [ Installation ](#install)
@@ -64,3 +67,4 @@ After submission your submitted file wil get judged and the test cases you passe
 
 [overview]: resources/Screenshot.png "alt"
 [failed]: resources/failed.png
+[browser]: resources/browser_mode.png
