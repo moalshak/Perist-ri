@@ -10,6 +10,8 @@ Failed submission attempt:
 Browser Mode:
     ![][browser]
 
+---
+
 ## Table Of Contents:
 1. [ Requirements ](#desc)
 2. [ Installation ](#install)
@@ -17,6 +19,9 @@ Browser Mode:
     1. [Through command line arguments](#cmd)
     2. [As a command line browser](#browser)
 4. [Coming features](#coming)
+
+---
+
 
 <a name="req"></a>
 ## Requirements
@@ -61,9 +66,9 @@ You can specify to what directory you want to go with numbers (indices). When yo
 After submission your submitted file wil get judged and the test cases you passed/failed will get prompted in your terminal. If you pass all test cases the program will terminate. Otherwise, you are given the chance to resubmit.
 <a name="coming"></a>
 # Coming features
+
 1. See in, out & difference test files
-2. Get hints from failed test cases
-3. ?
+2. ?
 
 [overview]: resources/Screenshot.png "alt"
 [failed]: resources/failed.png
