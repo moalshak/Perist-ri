@@ -32,7 +32,7 @@ Browser Mode:
 
     > [Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git#:~:text=work%20just%20fine.-,Installing%20on%20Linux,-If%20you%20want)
 
-2. Python
+2. Python3
     > installation guide [here](https://realpython.com/installing-python/)
 
 <a name="install"></a>
