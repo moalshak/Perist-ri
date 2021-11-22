@@ -1,0 +1,6 @@
+pip install PyYAML
+pip install easygui
+pip install requests
+pip install BeautifulSoup
+pip install termcolor
+pip install pathlib
