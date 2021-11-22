@@ -1,6 +1,12 @@
 # Peristéri (Perist-ri)
 Submit to Themis through command line and get Themis's feedback.
 
+Successful submission attempt:
+    ![][overview]
+
+Failed submission attempt:
+    ![][failed]
+
 ## Table Of Contents:
 1. [ Requirements ](#desc)
 2. [ Installation ](#install)
