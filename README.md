@@ -1,2 +1,2 @@
-# Perist-ri
+# Peristéri (Perist-ri)
 Submit to Themis through command line
