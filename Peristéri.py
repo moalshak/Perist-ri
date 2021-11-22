@@ -197,9 +197,9 @@ def data_config(write_path):
         exit(1)
 
 
-def attempt_login(url, data):
+def attempt_login(data):
     try:
-        r = s.get(url, headers=headers)
+        global r
         soup = BeautifulSoup(r.text, 'html5lib')
         # print(r.text)
         data['_csrf'] = soup.find('input', attrs={'name': '_csrf'})['value']
@@ -254,7 +254,8 @@ with requests.session() as s:
 
     try:
         url = sys.argv[2]
-        while not attempt_login(url, data):
+        r = s.get(url, headers=headers)
+        while not attempt_login(data):
             data_config(write_path)
             data = read_data()
 
@@ -265,10 +266,11 @@ with requests.session() as s:
     except IndexError:
         print("You can exit at any time by entering the number 69 or CTRL+Z\n")
         url = 'https://themis.housing.rug.nl/course/2021-2022'
-        while not attempt_login(url):
+        r = s.get(url, headers=headers)
+        while not attempt_login(data):
             data_config(write_path)
             data = read_data()
-            attempt_login(url, data)
+            attempt_login(data)
 
         selected_course_url = url
 
