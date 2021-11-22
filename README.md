@@ -1,17 +1,13 @@
 # Peristéri (Perist-ri)
 Submit to Themis through command line and get Themis's feedback.
+
+## Table Of Contents:
 1. [ Requirements ](#desc)
 2. [ Installation ](#install)
 3. [ Usage ](#usage)
     1. [Through command line arguments](#cmd)
     2. [As a command line browser](#browser)
 4. [Coming features](#coming)
-
-Successful submission attempt:
-    ![][overview]
-
-Failed submission attempt:
-    ![][failed]
 
 <a name="req"></a>
 ## Requirements
