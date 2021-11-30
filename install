@@ -8,6 +8,5 @@ pip install termcolor
 pip install pathlib 
 mkdir ~/.themisSubmitter 
 cp Peristéri.py ~/.themisSubmitter 
-chmod +x ~/.themisSubmitter/Peristéri.py 
 sudo cp submit /usr/bin/ 
 echo "Everything installed successfully"
