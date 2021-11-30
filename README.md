@@ -1,6 +1,6 @@
 # Peristéri (Perist-ri)
 
-### New feature !
+### [New feature !](#new)
 
 
 Submit to Themis through command line and get Themis's feedback.
@@ -82,7 +82,7 @@ See [submit.hs](submit.sh) (30-nov-21)
 <a name="coming"></a>
 # Coming features
 
-1. [✅] Make the program installable as a `bin`
+1. [x] Make the program installable as a `bin`
 2. [ ] Multiple Files submission
 3. [ ] See in, out & difference test files
 4. [ ] Encrypting the data
