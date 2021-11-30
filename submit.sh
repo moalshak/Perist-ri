@@ -2,8 +2,7 @@
 if [ -d "~/.themisSubmitter" ] 
 then
     mkdir ~/.themisSubmitter
-    cp Peristéri.py ~/.themisSubmitter
-    chmod +x ~/.themisSubmitter/Peristéri.py
+    echo "Please make sure to copy Peristéri.py into ~/.themisSubmitter"
+else
+    python3 ~/.themisSubmitter/Peristéri.py $1 $2
 fi
-
-~/.themisSubmitter/Peristéri.py $1 $2

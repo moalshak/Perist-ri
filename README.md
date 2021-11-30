@@ -42,6 +42,8 @@ Browser Mode:
 2. Python3
     > installation guide [here](https://realpython.com/installing-python/)
 
+3. Pip (python3-pip)
+    > look it up for your OS (operating system)
 <a name="install"></a>
 ## Installation
 
