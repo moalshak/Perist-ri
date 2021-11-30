@@ -4,3 +4,4 @@ pip install requests
 pip install BeautifulSoup
 pip install termcolor
 pip install pathlib
+sudo cp submit /usr/bin/

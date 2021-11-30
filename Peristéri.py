@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 import time
 from pathlib import Path
@@ -74,9 +75,13 @@ def send_submit_request(r, request_url, s, soup):
         except TypeError:
             print_warning('No file chosen')
             return None, None, None
-    payload = {
-        '_csrf': request_url.split('=')[1]
-    }
+    try:
+        payload = {
+            '_csrf': request_url.split('=')[1]
+        }
+    except IndexError:
+        print_warning("Your link is invalid")
+        exit_program()
     # send request (submit)
     r = s.post(request_url, files=files, data=payload)
     soup = BeautifulSoup(r.text, 'html5lib')
@@ -207,7 +212,6 @@ def attempt_login(data):
     try:
         global r
         soup = BeautifulSoup(r.text, 'html5lib')
-        # print(r.text)
         data['_csrf'] = soup.find('input', attrs={'name': '_csrf'})['value']
         r = s.post(login_url, data=data, headers=headers)
         if r.status_code != (200 or 302):
@@ -259,7 +263,7 @@ with requests.session() as s:
     data = read_data()
 
     try:
-        url = sys.argv[2]
+        url = sys.argv[2].strip()
         r = s.get(url, headers=headers)
         while not attempt_login(data):
             data_config(write_path)
