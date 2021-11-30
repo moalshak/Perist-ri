@@ -1,4 +1,8 @@
 # Peristéri (Perist-ri)
+
+### New feature !
+
+
 Submit to Themis through command line and get Themis's feedback.
 
 Successful submission attempt:
@@ -20,6 +24,7 @@ Browser Mode:
 3. [ Usage ](#usage)
     1. [Through command line arguments](#cmd)
     2. [As a command line browser](#browser)
+4. [New features](#new)
 4. [Coming features](#coming)
 
 ---
@@ -54,11 +59,11 @@ This data will get stored locally in :
 ## Usage
 <a name="cmd"></a>
 ### Through command line arguments
-    > python Peristéri.py <file to submit> <submission url>
+    > submit <file to submit> <submission url>
 This will simply submit your file to the url you specify. This is the cleanest way to submit. But since not all people will prefer this way. You can use the browser method.
 <a name="browser"></a>
 ### As a command line browser
-    > python Peristéri.py
+    > submit
 This will let you browse Themis just like you would in your browser. BUT of course through the terminal.
 
 You can specify to what directory you want to go with numbers (indices). When you are at a submittable page, you will get asked if you want to submit or go back. When you submit a small window will open to get you to choose the file you want to submit.
@@ -66,6 +71,14 @@ You can specify to what directory you want to go with numbers (indices). When yo
 ### After submission
 
 After submission your submitted file wil get judged and the test cases you passed/failed will get prompted in your terminal. If you pass all test cases the program will terminate. Otherwise, you are given the chance to resubmit.
+
+<a name="new"></a>
+# New feature !
+The usage is now different and way better than the previous one. Instead of having to locate the `.py` file when submitting each time, you actually install it on your system as a `bin`. So you can use it now as any command you are used to in the terminal.
+See [submit.hs](submit.sh) (30-nov-21)
+
+    > submit
+
 <a name="coming"></a>
 # Coming features
 
