@@ -82,12 +82,13 @@ See [submit.hs](submit.sh) (30-nov-21)
 <a name="coming"></a>
 # Coming features
 
-1. Encrypting the data
-2. Better name for `.Py` file
-3. Multiple Files submission
-4. More documented code
-5. See in, out & difference test files
-6. ?
+1. [✅] Make the program installable as a `bin`
+2. [ ] Multiple Files submission
+3. [ ] See in, out & difference test files
+4. [ ] Encrypting the data
+5. [ ] Better name for `.Py` file
+6. [ ] More documented code
+7. ?
 
 [overview]: resources/Screenshot.png "alt"
 [failed]: resources/failed.png
