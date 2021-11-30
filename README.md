@@ -69,8 +69,12 @@ After submission your submitted file wil get judged and the test cases you passe
 <a name="coming"></a>
 # Coming features
 
-1. See in, out & difference test files
-2. ?
+1. Encrypting the data
+2. Better name for `.Py` file
+3. Multiple Files submission
+4. More documented code
+5. See in, out & difference test files
+6. ?
 
 [overview]: resources/Screenshot.png "alt"
 [failed]: resources/failed.png
