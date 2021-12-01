@@ -4,5 +4,5 @@ then
     mkdir ~/.themisSubmitter
     echo "Please make sure to copy Peristéri.py into ~/.themisSubmitter"
 else
-    ~/.themisSubmitter/Peristéri.py $1 $2
+    python3 ~/.themisSubmitter/Peristéri.py $1 $2
 fi

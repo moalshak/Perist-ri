@@ -204,7 +204,7 @@ def data_config(write_path):
                 print(event)
     except KeyboardInterrupt:
         print('\nAborting...')
-        shutil.rmtree(Path(str(Path.home()) + '/.themisSubmitter', ignore_errors=True))
+        os.path.remove(Path(str(Path.home()) + '/.themisSubmitter/data.yaml'))
         exit(1)
 
 
