@@ -50,15 +50,6 @@ Browser Mode:
     > git clone git@github.com:Stylo2k/Perist-ri.git
     > sh install
 
-try to use it via
-
-    > submit
-
-If that does not work, do :
-
-    > gcc submit.sh.x.c -o submit
-    > sudo cp submit /usr/bin
-
 ## First time configuration
 For the first time configuration you will need to specify your student number (with a lower case s) and your password
 This data will get stored locally in :
