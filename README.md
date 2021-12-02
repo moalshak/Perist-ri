@@ -48,7 +48,7 @@ Browser Mode:
 ## Installation
 
     > git clone git@github.com:Stylo2k/Perist-ri.git
-    > sh install
+    > sh install.sh
 
 ## First time configuration
 For the first time configuration you will need to specify your student number (with a lower case s) and your password
