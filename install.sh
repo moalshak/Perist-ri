@@ -20,4 +20,5 @@ then
 else
     echo "debain chosen"
     sudo cp debian/submit /usr/bin/
+fi
 echo "Everything installed successfully"
