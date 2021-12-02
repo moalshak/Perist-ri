@@ -88,9 +88,6 @@ The usage is now different and way better than the previous one. Instead of havi
 See [submit.hs](submit.sh) (30-nov-21)
 
     > submit
-This feature does not work on all distros tho. If you are having trouble with this feature, use
-    
-    > python3 ~/.themisSubmitter/Peristéri.py
 
 
 <a name="coming"></a>
