@@ -32,5 +32,5 @@ shc -f submit.sh -o submit
 sudo cp submit /usr/bin
 rm submit.sh.x.c
 rm -r -f shc
-rm sumit
+rm submit
 echo "Everything installed successfully"
