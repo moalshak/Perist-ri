@@ -15,13 +15,12 @@ echo "Are you using Ubuntu? (y/N) "
 read answer
 if [ "$answer" = "y" ]
 then
-    echo "Using Ubuntu"
     sudo add-apt-repository ppa:neurobin/ppa
     sudo apt-get update
     sudo apt-get install shc
 else
     git clone git@github.com:neurobin/shc.git
-    cd shc
+    cd sch
     ./configure
     ./autogen.sh
     make
