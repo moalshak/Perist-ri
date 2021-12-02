@@ -20,7 +20,7 @@ then
     sudo apt-get update
     sudo apt-get install shc
 else
-    git clone git@github.com:neurobin/shc.git
+    git clone https://github.com/neurobin/shc.git
     cd shc
     ./configure
     ./autogen.sh
