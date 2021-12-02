@@ -50,6 +50,14 @@ Browser Mode:
     > git clone git@github.com:Stylo2k/Perist-ri.git
     > sh install
 
+try to use it via
+
+    > submit
+
+If that does not work, do :
+
+    > gcc submit.sh.x.c -o submit
+    > sudo cp submit /usr/bin
 
 ## First time configuration
 For the first time configuration you will need to specify your student number (with a lower case s) and your password
@@ -63,6 +71,15 @@ This data will get stored locally in :
 ### Through command line arguments
     > submit <file to submit> <submission url>
 This will simply submit your file to the url you specify. This is the cleanest way to submit. But since not all people will prefer this way. You can use the browser method.
+
+Having trouble with the submit ? Try :
+
+    > python3 ~/.themisSubmitter/Peristéri.py
+
+Or just 
+
+    > ~/.themisSubmitter/Peristéri.py
+
 <a name="browser"></a>
 ### As a command line browser
     > submit
@@ -80,6 +97,10 @@ The usage is now different and way better than the previous one. Instead of havi
 See [submit.hs](submit.sh) (30-nov-21)
 
     > submit
+This feature does not work on all distros tho. If you are having trouble with this feature, use
+    
+    > python3 ~/.themisSubmitter/Peristéri.py
+
 
 <a name="coming"></a>
 # Coming features
