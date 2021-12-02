@@ -26,8 +26,8 @@ else
     ./autogen.sh
     make
     sudo make install
+    cd ..
 fi
-cd ..
 shc -f submit.sh -o submit
 sudo cp submit /usr/bin
 rm submit.sh.x.c
