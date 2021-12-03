@@ -42,7 +42,8 @@ def print_elements_list(elements_list_):
 
 
 def submit_chosen(s, url):
-    r = s.get(url)
+    # r = s.get(url)
+    r = attempt_connection(s, 'get', url, '')
     soup = BeautifulSoup(r.text, 'html5lib')
     # get the form to submit the file
     try:
@@ -95,7 +96,8 @@ def send_judge_request(payload, r, s, soup):
     judge = soup.find_all('form')[3]
     judge_url = main_url + judge['action']
     # send judge request
-    r = s.post(judge_url, data=payload)
+    # r = s.post(judge_url, data=payload)
+    r = attempt_connection(s, 'post', judge_url, payload)
     return r
 
 
@@ -207,13 +209,25 @@ def data_config(write_path):
         os.path.remove(Path(str(Path.home()) + '/.themisSubmitter/data.yaml'))
         exit(1)
 
-
+def attempt_connection(session, request_type, url, data):
+    try:
+        if request_type == 'get':
+            r = session.get(url, headers=headers)
+        elif request_type == 'post':
+            r = session.post(url, data=data, headers=headers)
+        
+        return r
+    except requests.exceptions.ConnectionError:
+        print_warning("Connection Error. Please make sure you are connected to the internet and try again")
+        exit_program()
+    
 def attempt_login(data):
     try:
         global r
         soup = BeautifulSoup(r.text, 'html5lib')
         data['_csrf'] = soup.find('input', attrs={'name': '_csrf'})['value']
-        r = s.post(login_url, data=data, headers=headers)
+        # r = s.post(login_url, data=data, headers=headers)
+        r = attempt_connection(s, 'post', login_url, data)
         if r.status_code != (200 or 302):
             print("Login Failed ❌.\nYour password or student number is/are incorrect\nstarting the data updater...")
             return False
@@ -264,7 +278,8 @@ with requests.session() as s:
 
     try:
         url = sys.argv[2].strip()
-        r = s.get(url, headers=headers)
+        # r = s.get(url, headers=headers)
+        r = attempt_connection(s, 'get', url, '')
         while not attempt_login(data):
             data_config(write_path)
             data = read_data()
@@ -274,9 +289,11 @@ with requests.session() as s:
             resubmit = command_line_input()
         exit_program()
     except IndexError:
-        print("You can exit at any time by entering the number 69 or CTRL+Z\n")
         url = 'https://themis.housing.rug.nl/course/2021-2022'
-        r = s.get(url, headers=headers)
+        r = attempt_connection(s, 'get', url)
+        print("You can exit at any time by entering the number 69 or CTRL+Z\n")
+
+        
         while not attempt_login(data):
             data_config(write_path)
             data = read_data()
@@ -294,13 +311,16 @@ with requests.session() as s:
                 if selected_element['class'][1] == 'ass-submitable':
                     submit_loop(s, selected_element)
                     selected_course_url = get_prev(selected_course_url)
-                    r = s.get(selected_course_url)
+                    # r = s.get(selected_course_url)
+                    r = attempt_connection(s, 'get', selected_course_url, '')
                 else:
                     selected_course_url = main_url + selected_element['href']
-                    r = s.get(selected_course_url)
+                    # r = s.get(selected_course_url)
+                    r = attempt_connection(s, 'get', selected_course_url, '')
             elif index == len(elements_list):
                 selected_course_url = get_prev(selected_course_url)
-                r = s.get(selected_course_url)
+                # r = s.get(selected_course_url)
+                r = attempt_connection(s, 'get', selected_course_url, '')
             elif index == exit_signal:
                 exit_program()
             else:
