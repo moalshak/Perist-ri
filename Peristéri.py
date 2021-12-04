@@ -287,7 +287,7 @@ def read_data(write_path):
             return data
     except TypeError:
         print('Invalid data found')
-        exit_program()
+        return data
 
 
 with requests.session() as s:
