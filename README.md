@@ -10,7 +10,7 @@ Successful submission attempt:
 
 Failed submission attempt:
     ![][failed]
-Here you get to see the reason and the hint (there were no hints for this case)
+Here you get to see the reason and the hint
 
 
 Browser Mode:
