@@ -1,3 +1,4 @@
+*.hs
 forme.md
 submit.sh.x.c
 # Byte-compiled / optimized / DLL files
