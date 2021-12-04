@@ -1,6 +1,9 @@
 # Peristéri (Perist-ri)
 
-### [New feature ! (Multiple Files Submission)](#new)
+### [Latest Features](#new)
+- Installable as a binary file
+- Multiple Files Submissoin
+- Now In, Out, Expected, Error & Diff files
 
 
 Submit to Themis through command line and get Themis's feedback.
