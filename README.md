@@ -1,6 +1,6 @@
 # Peristéri (Perist-ri)
 
-### [New feature !](#new)
+### [New feature ! (Multiple Files Submission)](#new)
 
 
 Submit to Themis through command line and get Themis's feedback.
@@ -52,7 +52,7 @@ Browser Mode:
 <a name="install"></a>
 ## Installation
 
-    > git clone git@github.com:Stylo2k/Perist-ri.git
+    > git clone https://github.com/Stylo2k/Perist-ri.git
     > sh install.sh
 
 ## First time configuration
@@ -95,7 +95,7 @@ After submission your submitted file wil get judged and the test cases you passe
 <a name="new"></a>
 # New feature !
 The usage is now different and way better than the previous one. Instead of having to locate the `.py` file when submitting each time, you actually install it on your system as a `bin`. So you can use it now as any command you are used to in the terminal.
-See [submit.hs](submit.sh) (30-nov-21)
+See [submit.sh](submit.sh) (30-nov-21)
 
     > submit
 This feature does not work on all distros tho. If you are having trouble with this feature, use
