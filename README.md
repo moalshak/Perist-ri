@@ -13,7 +13,10 @@ Failed submission attempt:
 Here you get to see the reason and the hint
 
 Multiple Files Submission:
- ![][multiple_files]
+    ![][multiple_files]
+
+In, Out, Expected, Error and output files:
+    ![][show_files]
 
 Browser Mode:
     ![][browser]
@@ -62,7 +65,12 @@ This data will get stored locally in :
 ## Usage
 <a name="cmd"></a>
 ### Through command line arguments
-    > submit <file to submit> <submission url>
+    > submit <files to submit> <submission url>
+
+Or to see the in, out, expected, error and diff flies:
+
+    > submit <files to submit> -y <submission url>
+
 This will simply submit your file to the url you specify. This is the cleanest way to submit. But since not all people will prefer this way. You can use the browser method.
 
 Having trouble with the submit ? Try :
@@ -98,12 +106,17 @@ You can now submit multiple files !!!! (04-12-21)
 
     > submit <file 1> <file 2> <file...> <link>
 
+You can now see the in, out, expected, error and diff files !
+
+    > submit <file1> <files...> -y <link>
+
 <a name="coming"></a>
 # Coming features
 
 1. [x] Make the program installable as a `bin`
 2. [x] Multiple Files submission
-3. [ ] See in, out & difference test files
+3. [x] See in, out & difference test files
+    - [ ] Add this to the browser mode
 4. [ ] Encrypting the data
 5. [ ] Better name for `.Py` file
 6. [ ] More documented code
@@ -113,3 +126,4 @@ You can now submit multiple files !!!! (04-12-21)
 [failed]: resources/failed.png
 [browser]: resources/browser_mode.png
 [multiple_files]: resources/mFiles.png
+[show_files]: resources/show_files.png

@@ -8,7 +8,6 @@ import easygui
 import requests
 from bs4 import BeautifulSoup
 from termcolor import colored
-import shutil
 
 login_url = 'https://themis.housing.rug.nl/log/in'
 main_url = 'https://themis.housing.rug.nl'
@@ -20,6 +19,7 @@ headers = {
 exit_signal = 69
 passed_all = False
 
+wants_to_print_files = False
 
 def print_warning(text):
     print(colored(text, 'red'))
@@ -42,7 +42,7 @@ def print_elements_list(elements_list_):
 
 
 def submit_chosen(s, url):
-    # r = s.get(url)
+    r = s.get(url)
     r = attempt_connection(s, 'get', url, '')
     soup = BeautifulSoup(r.text, 'html5lib')
     # get the form to submit the file
@@ -72,14 +72,22 @@ def is_link(the_string):
     else:
         return False
 
+def is_arg(the_string):
+    if '-y' in the_string:
+        return True
+    else:
+        return False
 
 def send_submit_request(r, request_url, s, soup):
     files = {}
     try:
         i = 1
         while not is_link(sys.argv[i]):
-            files[f'upload-{i}'] = open(sys.argv[i], 'rb') 
-            
+            global wants_to_print_files
+            if not wants_to_print_files and is_arg(sys.argv[i]):
+                wants_to_print_files = True
+            else:
+                files[f'upload-{i}'] = open(sys.argv[i], 'rb') 
             i += 1
     except IndexError:
         try:
@@ -135,7 +143,7 @@ def print_test_results(rows, rows_):
     l = 0
     for i in range(0, len(rows)):
         tr = rows[i]
-        if tr['class'][2] == 'sub-casetop':
+        if 'sub-casetop' in tr['class']:
             l += 1
             if tr['class'][1] == 'passed':
                 j += 1
@@ -146,8 +154,16 @@ def print_test_results(rows, rows_):
                 reason = tr.find("td", attrs={"class": "iconize"}).text
                 if reason == '':
                     reason = 'Compile Error'
+                
                 print(f'Reason: {reason}. '
                       f'{rows_[i * 3].td.text.strip()}\n')
+            if wants_to_print_files:
+                # find files in, out, diff and err
+                tr_ = rows_[i * 3 + 1].find_all('span', attrs={'class':'nowrap'})
+                for f in tr_:
+                    files_soup = attempt_connection(s, 'get', main_url + f.a['href'], '').text
+                    sys.stdout.write(f'\n{f.a.text}:\n{files_soup.strip()}\n')
+
     global passed_all
     if j == l:
         passed_all = True
@@ -175,10 +191,10 @@ def submit_loop(s, selected_element):
 
 def get_prev(link):
     prev = main_url
-    splt = selected_course_url.split('/')[3:-1]
+    sec = link.split('/')[3:-1]
     prev += '/'
-    for i in range(0, len(splt)):
-        prev += splt[i] + '/'
+    for i in range(0, len(sec)):
+        prev += sec[i] + '/'
     return prev[0:-1]
 
 
@@ -187,7 +203,7 @@ def exit_program():
     exit(0)
 
 
-def command_line_input(url):
+def command_line_input(s, url):
     print(f'Submitting to {url}')
     submit_chosen(s, url)
     if passed_all:
@@ -230,7 +246,7 @@ def attempt_connection(session, request_type, url, data):
         print_warning("Connection Error. Please make sure you are connected to the internet and try again")
         exit_program()
     
-def attempt_login(data):
+def attempt_login(s, data):
     try:
         global r
         soup = BeautifulSoup(r.text, 'html5lib')
@@ -258,7 +274,7 @@ def create_data_tree():
     return write_path, was_there
 
 
-def read_data():
+def read_data(write_path):
     data = {}
     try:
         with open(write_path, 'r') as stream:
@@ -271,19 +287,19 @@ def read_data():
             return data
     except TypeError:
         print('Invalid data found')
-        return data
+        exit_program()
 
 
 with requests.session() as s:
     print("Welcome, to the Themis submitter by Mohammad Al Shakoush")
 
     write_path, was_there = create_data_tree()
+
     if not was_there:
         print("Welcome, this is a first time and one time configuration process."
-              "To be able to log you into themis you need:")
+            "To be able to log you into themis you need:")
         data_config(write_path)
-
-    data = read_data()
+    data = read_data(write_path)
 
     try:
         i = 1
@@ -293,27 +309,25 @@ with requests.session() as s:
         url = sys.argv[i].strip()
         
         r = attempt_connection(s, 'get', url, '')
-        while not attempt_login(data):
+        while not attempt_login(s, data):
             data_config(write_path)
             data = read_data()
-
-        resubmit = command_line_input(url)
+        resubmit = command_line_input(s, url)
         while resubmit != 'n':
-            resubmit = command_line_input(url)
+            resubmit = command_line_input(s, url)
         exit_program()
+
     except IndexError:
         url = 'https://themis.housing.rug.nl/course/2021-2022'
         r = attempt_connection(s, 'get', url, '')
         print("You can exit at any time by entering the number 69 or CTRL+Z\n")
-
         
-        while not attempt_login(data):
+        while not attempt_login(s, data):
             data_config(write_path)
             data = read_data()
-            attempt_login(data)
-
+            attempt_login(s, data)
         selected_course_url = url
-
+        
         while True:
             soup1 = BeautifulSoup(r.text, 'html5lib')
             elements_list = soup1.find_all('li', class_='large')
@@ -324,15 +338,12 @@ with requests.session() as s:
                 if selected_element['class'][1] == 'ass-submitable':
                     submit_loop(s, selected_element)
                     selected_course_url = get_prev(selected_course_url)
-                    # r = s.get(selected_course_url)
                     r = attempt_connection(s, 'get', selected_course_url, '')
                 else:
                     selected_course_url = main_url + selected_element['href']
-                    # r = s.get(selected_course_url)
                     r = attempt_connection(s, 'get', selected_course_url, '')
             elif index == len(elements_list):
                 selected_course_url = get_prev(selected_course_url)
-                # r = s.get(selected_course_url)
                 r = attempt_connection(s, 'get', selected_course_url, '')
             elif index == exit_signal:
                 exit_program()
