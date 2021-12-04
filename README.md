@@ -12,6 +12,8 @@ Failed submission attempt:
     ![][failed]
 Here you get to see the reason and the hint
 
+Multiple Files Submission:
+ ![][multiple_files]
 
 Browser Mode:
     ![][browser]
@@ -92,12 +94,15 @@ This feature does not work on all distros tho. If you are having trouble with th
     
     > python3 ~/.themisSubmitter/Peristéri.py
 
+You can now submit multiple files !!!! (04-12-21)
+
+    > submit <file 1> <file 2> <file...> <link>
 
 <a name="coming"></a>
 # Coming features
 
 1. [x] Make the program installable as a `bin`
-2. [ ] Multiple Files submission
+2. [x] Multiple Files submission
 3. [ ] See in, out & difference test files
 4. [ ] Encrypting the data
 5. [ ] Better name for `.Py` file
@@ -107,3 +112,4 @@ This feature does not work on all distros tho. If you are having trouble with th
 [overview]: resources/Screenshot.png "alt"
 [failed]: resources/failed.png
 [browser]: resources/browser_mode.png
+[multiple_files]: resources/mFiles.png
