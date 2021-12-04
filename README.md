@@ -47,7 +47,7 @@ Browser Mode:
 <a name="install"></a>
 ## Installation
 
-    > git clone git@github.com:Stylo2k/Perist-ri.git
+    > git clone https://github.com/Stylo2k/Perist-ri.git
     > sh install.sh
 
 ## First time configuration
