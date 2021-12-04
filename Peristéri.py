@@ -66,10 +66,21 @@ def submit_chosen(s, url):
     rows_ = soup.find_all('tr', {'class': False})
     print_test_results(rows, rows_)
 
+def is_link(the_string):
+    if 'https' in the_string:
+        return True
+    else:
+        return False
+
 
 def send_submit_request(r, request_url, s, soup):
+    files = {}
     try:
-        files = {'upload-0': open(sys.argv[1], 'rb')}
+        i = 1
+        while not is_link(sys.argv[i]):
+            files[f'upload-{i}'] = open(sys.argv[i], 'rb') 
+            
+            i += 1
     except IndexError:
         try:
             files = {'upload-0': open(easygui.fileopenbox(), 'rb')}
@@ -83,7 +94,7 @@ def send_submit_request(r, request_url, s, soup):
     except IndexError:
         print_warning("Your link is invalid")
         exit_program()
-    # send request (submit)
+
     r = s.post(request_url, files=files, data=payload)
     soup = BeautifulSoup(r.text, 'html5lib')
     return payload, r, soup
@@ -96,7 +107,6 @@ def send_judge_request(payload, r, s, soup):
     judge = soup.find_all('form')[3]
     judge_url = main_url + judge['action']
     # send judge request
-    # r = s.post(judge_url, data=payload)
     r = attempt_connection(s, 'post', judge_url, payload)
     return r
 
@@ -177,8 +187,7 @@ def exit_program():
     exit(0)
 
 
-def command_line_input():
-    url = sys.argv[2]
+def command_line_input(url):
     print(f'Submitting to {url}')
     submit_chosen(s, url)
     if passed_all:
@@ -277,20 +286,24 @@ with requests.session() as s:
     data = read_data()
 
     try:
-        url = sys.argv[2].strip()
-        # r = s.get(url, headers=headers)
+        i = 1
+        while not is_link(sys.argv[i]):
+            i += 1
+        
+        url = sys.argv[i].strip()
+        
         r = attempt_connection(s, 'get', url, '')
         while not attempt_login(data):
             data_config(write_path)
             data = read_data()
 
-        resubmit = command_line_input()
+        resubmit = command_line_input(url)
         while resubmit != 'n':
-            resubmit = command_line_input()
+            resubmit = command_line_input(url)
         exit_program()
     except IndexError:
         url = 'https://themis.housing.rug.nl/course/2021-2022'
-        r = attempt_connection(s, 'get', url)
+        r = attempt_connection(s, 'get', url, '')
         print("You can exit at any time by entering the number 69 or CTRL+Z\n")
 
         
