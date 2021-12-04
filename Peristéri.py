@@ -324,7 +324,7 @@ with requests.session() as s:
         
         while not attempt_login(s, data):
             data_config(write_path)
-            data = read_data()
+            data = read_data(write_path)
             attempt_login(s, data)
         selected_course_url = url
         
