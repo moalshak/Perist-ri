@@ -1,6 +1,6 @@
 # Peristéri (Perist-ri)
 
-### [New feature !](#new)
+### [New feature ! (Multiple Files Submission)](#new)
 
 
 Submit to Themis through command line and get Themis's feedback.
