@@ -235,7 +235,7 @@ def data_config(write_path):
                 print(event)
     except KeyboardInterrupt:
         print('\nAborting...')
-        os.path.remove(Path(str(Path.home()) + '/.themisSubmitter/data.yaml'))
+        # os.path.remove(Path(str(Path.home()) + '/.themisSubmitter/data.yaml'))
         exit(1)
 
 
@@ -257,7 +257,6 @@ def attempt_login(s, data):
         global r
         soup = BeautifulSoup(r.text, 'html5lib')
         data['_csrf'] = soup.find('input', attrs={'name': '_csrf'})['value']
-        # r = s.post(login_url, data=data, headers=headers)
         r = attempt_connection(s, 'post', login_url, data)
         if r.status_code != (200 or 302):
             print("Login Failed ❌.\nYour password or student number is/are incorrect\nstarting the data updater...")
@@ -293,7 +292,7 @@ def read_data(write_path):
             return data
     except TypeError:
         print('Invalid data found')
-        exit_program()
+        return data
 
 
 with requests.session() as s:
@@ -305,7 +304,11 @@ with requests.session() as s:
         print("Welcome, this is a first time and one time configuration process."
               "To be able to log you into themis you need:")
         data_config(write_path)
+        
     data = read_data(write_path)
+    while data == {}:
+        data_config(write_path)
+        data = read_data(write_path)
 
     try:
         i = 1
