@@ -21,6 +21,7 @@ passed_all = False
 
 wants_to_print_files = False
 
+
 def print_warning(text):
     print(colored(text, 'red'))
 
@@ -66,17 +67,20 @@ def submit_chosen(s, url):
     rows_ = soup.find_all('tr', {'class': False})
     print_test_results(rows, rows_)
 
+
 def is_link(the_string):
     if 'https' in the_string:
         return True
     else:
         return False
 
+
 def is_arg(the_string):
     if '-y' in the_string:
         return True
     else:
         return False
+
 
 def send_submit_request(r, request_url, s, soup):
     files = {}
@@ -87,7 +91,7 @@ def send_submit_request(r, request_url, s, soup):
             if not wants_to_print_files and is_arg(sys.argv[i]):
                 wants_to_print_files = True
             else:
-                files[f'upload-{i}'] = open(sys.argv[i], 'rb') 
+                files[f'upload-{i}'] = open(sys.argv[i], 'rb')
             i += 1
     except IndexError:
         try:
@@ -154,12 +158,12 @@ def print_test_results(rows, rows_):
                 reason = tr.find("td", attrs={"class": "iconize"}).text
                 if reason == '':
                     reason = 'Compile Error'
-                
+
                 print(f'Reason: {reason}. '
                       f'{rows_[i * 3].td.text.strip()}\n')
             if wants_to_print_files:
                 # find files in, out, diff and err
-                tr_ = rows_[i * 3 + 1].find_all('span', attrs={'class':'nowrap'})
+                tr_ = rows_[i * 3 + 1].find_all('span', attrs={'class': 'nowrap'})
                 for f in tr_:
                     files_soup = attempt_connection(s, 'get', main_url + f.a['href'], '').text
                     sys.stdout.write(f'\n{f.a.text}:\n{files_soup.strip()}\n')
@@ -234,18 +238,20 @@ def data_config(write_path):
         os.path.remove(Path(str(Path.home()) + '/.themisSubmitter/data.yaml'))
         exit(1)
 
+
 def attempt_connection(session, request_type, url, data):
     try:
         if request_type == 'get':
             r = session.get(url, headers=headers)
         elif request_type == 'post':
             r = session.post(url, data=data, headers=headers)
-        
+
         return r
     except requests.exceptions.ConnectionError:
         print_warning("Connection Error. Please make sure you are connected to the internet and try again")
         exit_program()
-    
+
+
 def attempt_login(s, data):
     try:
         global r
@@ -297,7 +303,7 @@ with requests.session() as s:
 
     if not was_there:
         print("Welcome, this is a first time and one time configuration process."
-            "To be able to log you into themis you need:")
+              "To be able to log you into themis you need:")
         data_config(write_path)
     data = read_data(write_path)
 
@@ -305,9 +311,9 @@ with requests.session() as s:
         i = 1
         while not is_link(sys.argv[i]):
             i += 1
-        
+
         url = sys.argv[i].strip()
-        
+
         r = attempt_connection(s, 'get', url, '')
         while not attempt_login(s, data):
             data_config(write_path)
@@ -321,13 +327,13 @@ with requests.session() as s:
         url = 'https://themis.housing.rug.nl/course/2021-2022'
         r = attempt_connection(s, 'get', url, '')
         print("You can exit at any time by entering the number 69 or CTRL+Z\n")
-        
+
         while not attempt_login(s, data):
             data_config(write_path)
             data = read_data()
             attempt_login(s, data)
         selected_course_url = url
-        
+
         while True:
             soup1 = BeautifulSoup(r.text, 'html5lib')
             elements_list = soup1.find_all('li', class_='large')
