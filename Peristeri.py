@@ -8,6 +8,7 @@ import easygui
 import requests
 from bs4 import BeautifulSoup
 from termcolor import colored
+from datetime import date
 
 login_url = 'https://themis.housing.rug.nl/log/in'
 main_url = 'https://themis.housing.rug.nl'
@@ -327,7 +328,9 @@ with requests.session() as s:
         exit_program()
 
     except IndexError:
-        url = 'https://themis.housing.rug.nl/course/2021-2022'
+        current_year = int(date.today().year)
+
+        url = f'https://themis.housing.rug.nl/course/{str(current_year)}-{str(current_year+1)}'
         r = attempt_connection(s, 'get', url, '')
         print("You can exit at any time by entering the number 69 or CTRL+Z\n")
 
