@@ -2,31 +2,41 @@
 
 # TODO : Deal with selection of languages
 
-default_env_user_name="your_username"
+default_env_user_name="your_snumber"
 default_env_password="your_password"
 default_env_url="https://themis.housing.rug.nl/course/rest_of_url"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW="\033[1;33m"
 NC='\033[0m'
 
+: '
+	creates the .env file
+'
 function createEnv() {
-	echo "Please add your details to the .env file or provide them as command line arguments"
-	echo "A .env file has been created, make sure to fill in the details or provide them as command line arguments"
+	printf "Please add your details to the .env file or provide them as command line arguments\n" 1>&2;
 	# create .env file
-	echo "USER_NAME_ENV=$default_env_user_name" > .env
-	echo "PASSWORD_ENV=$default_env_password" >> .env
-	echo "URL_ENV=$default_env_url">> .env
-	echo "### !! dont edit below this line, unless you know what you are doing !! ###" >> .env
-	echo "FILES_ENV=files" >> .env
-	echo "its contents"
-	echo "====="
+	printf "USER_NAME_ENV=$default_env_user_name # Your s/p number e.g. s123456 \n" > .env
+	printf "PASSWORD_ENV=$default_env_password # Your very secure password\n" >> .env
+	printf "URL_ENV=$default_env_url # The url of the assignment to submit to\n">> .env
+	printf "### !! dont edit below this line, unless you know what you are doing !! ###\n" >> .env
+	printf "FILES_ENV=files" >> .env
+
+	printf "${GREEN}A .env file has been created, make sure to fill in the details or provide them as command line arguments\n${NC}"
+
+	printf "\nThe .env content:\n"
+	printf "=====\n"
 	cat .env
-	echo "====="
+	printf "=====\n"
+
+	printf "\nTry \"submit --help\" to start your journey!\n"
 	exit 1
 }
 
+# list of files to submit
 FILES=""
+
 while test $# -gt 0; do
 	case "$1" in
 		-h|--help)
@@ -37,8 +47,8 @@ while test $# -gt 0; do
 		echo "Options:"
 		echo "  --create-env				Create a .env file with your details"
 		echo "  -l, --url,  --URL			Url / link to submit to"
-		echo "  -u, --user, --username		User name"
-		echo "  -p, --pass, --password		Password"
+		echo "  -u, --user, --username		Your User name (s123456)"
+		echo "  -p, --pass, --password		Your Password (123)"
 		echo "  -h, --help				Display this help message"
 		echo "  -v, --version				Display version information"
 		exit 0
@@ -145,14 +155,16 @@ fi
 
 
 BASE_URL="https://themis.housing.rug.nl"
-# BASE_URL="https://127.0.0.1:8443"
 
 SUBMIT_URL="$URL"
 
-USER_AGENT="Mohammad Al Shakoush, Bash's script (new peresteri)"
+USER_AGENT="Peresteri_2.0_by_Mohammad_al_Shakoush"
 
+# secure ? no. We should encrypt this using the users' public key ?
+# but with that we lost some functionality (which is submitting without entering a password)
 COOKIE_FILE=".cookie"
 
+# Login - endpoint
 LOGIN_EP="/log/in"
 
 LOGIN="$BASE_URL$LOGIN_EP"
@@ -189,15 +201,36 @@ function extractCSRF(){
 
 function login(){
 	if [ $LOGGED_IN -eq 1 ]; then
+		printf "${GREEN}Already logged in${NC}\n"
 		return
 	fi
+
+	printf "${YELLOW}Attempting Login${NC}\n"
 	curl $FLAGS -b $COOKIE_FILE -X POST -d "_csrf=$1" -d "user=$USER_NAME" -d "password=$PASSWORD" $LOGIN 1> /dev/null
-}
+
+	isLoggedIn $@
+
+	if [ $LOGGED_IN -eq 1 ]; then
+		printf "${GREEN}Login Successfull${NC}\n"
+	else 
+		printf "${RED}Login failed!${NC}\n"
+		exit 1
+	fi
+}	
 
 function submit(){
+	isLoggedIn $@
+	if [ $LOGGED_IN -eq 0 ]; then
+		printf "${RED}You were logged out\nSomething went wrong${NC}\n"
+		return
+	fi
+
 	action=$(curl $FLAGS -b $COOKIE_FILE $SUBMIT_URL | grep -E "action=\"(.{10,})\"" | cut -d \" -f2)
 	
-	redirect=$(curl $FLAGS -b $COOKIE_FILE -X POST $BASE_URL$action $FILES | cut -d ' ' -f4)
+	# themis does not ecnode spaces in the url when putting them in the form
+	action=$(echo $action | sed 's/ /%20/g')
+
+	redirect=$(curl $FLAGS -b $COOKIE_FILE -X POST $BASE_URL$action $FILES  | cut -d ' ' -f4)
 
 	judgeUrl=$(echo $redirect | sed 's/submission/judge/')
 
