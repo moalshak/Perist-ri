@@ -1,5 +1,10 @@
 # Peristéri (Perist-ri)
 
+## Peristéri 2.0 has been released! No need for python at all. All you need is your shell
+Check out https://github.com/Stylo2k/Perist-ri/tree/2.0
+
+
+
 ### [Latest Features](#new)
 - Installable as a binary file
 - Multiple Files Submissoin
