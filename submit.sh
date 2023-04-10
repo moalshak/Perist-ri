@@ -34,6 +34,14 @@ function createEnv() {
 	exit 1
 }
 
+
+function createIgnore() {
+	printf "Always add the .env and .cookie file to your .gitignore file\n" 1>&2;
+	# create .env file
+	printf ".env\n.cookie\n" > .gitignore
+	exit 1
+}
+
 # list of files to submit
 FILES=""
 
@@ -86,6 +94,7 @@ done
 # check if .env exists
 if [ ! -f .env ]; then
 	createEnv
+	createIgnore
 fi
 
 {
